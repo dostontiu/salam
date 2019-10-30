@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Catalog */
+/* @var $model common\models\Category */
 
 $this->title = Yii::t('app', 'Создать каталог');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Catalogs'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="catalog-create">
+<div class="category-create">
 
     <?= $this->render('_form', [
         'model' => $model,

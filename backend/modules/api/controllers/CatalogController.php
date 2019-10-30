@@ -2,7 +2,7 @@
 
 namespace app\modules\api\controllers;
 
-class CatalogController extends ApiActiveController
+class CategoryController extends ApiActiveController
 {
-    public $modelClass = 'common\models\Catalog';
+    public $modelClass = 'common\models\Category';
 }

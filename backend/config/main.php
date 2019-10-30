@@ -36,7 +36,7 @@ return [
     ],
     'components' => [
         'request' => [
-            'baseUrl' => '/admin',
+//            'baseUrl' => '/admin',
             'csrfParam' => '_csrf-backend',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',

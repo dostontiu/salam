@@ -21,7 +21,7 @@ class OrganizationQuery extends Organization
     {
         return [
             [['id', 'user_id', 'region_id'], 'integer'],
-            [['rating', 'photo', 'gps', 'name_tj', 'name_en', 'name_ru', 'description_tj', 'description_en', 'description_ru', 'catalog', 'fullName'], 'safe'],
+            [['rating', 'photo', 'gps', 'name_tj', 'name_en', 'name_ru', 'type_tj', 'type_en', 'type_ru', 'description_tj', 'description_en', 'description_ru', 'category', 'fullName'], 'safe'],
         ];
     }
 
@@ -61,6 +61,9 @@ class OrganizationQuery extends Organization
                 ],
                 'region_id',
                 'rating',
+                'type_tj',
+                'type_en',
+                'type_ru',
             ]
         ]);
 
@@ -71,15 +74,7 @@ class OrganizationQuery extends Organization
             // $query->where('0=1');
             return $dataProvider;
         }
-            $catalg = explode('|',$this->catalog)[1];
-        if (!empty($catalg)){
-            $catalog_filter = ['in', 'id',explode(',', $catalg)];
-        } else {
-            $catalog_filter = ['id' => 0];
-        }
-        if (empty($this->catalog)){
-            $catalog_filter = [];
-        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -98,10 +93,12 @@ class OrganizationQuery extends Organization
             ->andFilterWhere(['like', 'name_tj', $this->name_tj])
             ->andFilterWhere(['like', 'name_en', $this->name_en])
             ->andFilterWhere(['like', 'name_ru', $this->name_ru])
+            ->andFilterWhere(['like', 'type_tj', $this->type_tj])
+            ->andFilterWhere(['like', 'type_en', $this->type_en])
+            ->andFilterWhere(['like', 'type_ru', $this->type_ru])
             ->andFilterWhere(['like', 'description_tj', $this->description_tj])
             ->andFilterWhere(['like', 'description_en', $this->description_en])
-            ->andFilterWhere(['like', 'description_en', $this->description_en])
-            ->andFilterWhere($catalog_filter);
+            ->andFilterWhere(['like', 'description_en', $this->description_en]);
 
         return $dataProvider;
     }

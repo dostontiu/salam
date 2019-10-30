@@ -1,17 +1,17 @@
 <?php
 
-use common\models\Catalog;
+use common\models\Category;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\search\CatalogQuery */
+/* @var $searchModel common\models\search\CategoryQuery */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Каталоги');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="catalog-index col-md-6 col-md-offset-3">
+<div class="category-index col-md-6 col-md-offset-3">
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </a>
                     &nbsp;
                     <div class="dropdown dropdown-inline">
-                        <a href="<?=Yii::$app->homeUrl?>catalog/create" class="btn btn-brand btn-icon-sm">
+                        <a href="<?=Yii::$app->homeUrl?>category/create" class="btn btn-brand btn-icon-sm">
                             <i class="flaticon2-plus"></i> Добавить
                         </a>
                     </div>
@@ -47,18 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'fullName:html',
-                    [
-                        'attribute' => 'parent_id',
-                        'label' => 'Родитель',
-                        'value' => function($model){
-                            return ($model->parent_id!=null) ? $model->parent->name_ru : '';
-                        },
-                        'filter' => Catalog::find()->select(['name_ru', 'id'])->indexBy('id')->column(),
-                        'filterInputOptions' => [
-                            'class' => 'form-control',
-                            'prompt' => 'Все',
-                        ],
-                    ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => 'Действия',

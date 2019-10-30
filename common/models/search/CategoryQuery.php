@@ -4,12 +4,12 @@ namespace common\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Catalog;
+use common\models\Category;
 
 /**
- * CatalogQuery represents the model behind the search form of `common\models\Catalog`.
+ * CategoryQuery represents the model behind the search form of `common\models\Category`.
  */
-class CatalogQuery extends Catalog
+class CategoryQuery extends Category
 {
     public $fullName;
     /**
@@ -18,7 +18,7 @@ class CatalogQuery extends Catalog
     public function rules()
     {
         return [
-            [['id', 'parent_id'], 'integer'],
+            [['id'], 'integer'],
             [['icon', 'name_tj', 'name_en', 'name_ru', 'fullName'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class CatalogQuery extends Catalog
      */
     public function search($params)
     {
-        $query = Catalog::find();
+        $query = Category::find();
 
         // add conditions that should always apply here
 
@@ -74,7 +74,6 @@ class CatalogQuery extends Catalog
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'parent_id' => $this->parent_id,
         ]);
 
         $query->andWhere(

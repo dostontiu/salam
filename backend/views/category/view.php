@@ -4,15 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Catalog */
+/* @var $model common\models\Category */
 
 $this->title = 'Каталог : '.$model->name_ru;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Catalogs'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
 ?>
-<div class="catalog-view">
+<div class="category-view">
     <div class="col-md-8 col-md-offset-2">
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__head kt-portlet__head--lg">
@@ -44,12 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options' => ['class' => 'table kt-datatable__table'],
                         'attributes' => [
                             'id',
-                            [
-                                'attribute' => 'parent_id',
-                                'value' => function($model){
-                                    return ($model->parent_id!=null) ? $model->parent->name_ru : '';
-                                },
-                            ],
                             'name_tj',
                             'name_en',
                             'name_ru',

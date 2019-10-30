@@ -4,7 +4,7 @@
 
 $this->title = 'My Yii Application';
 ?>
-<header style="background-image: url('images/header.jpg');">
+<header style="background-image: url('<?=Yii::$app->homeUrl?>images/header.jpg');">
     <div class="header-content navbar-">
         <div class="header-content-inner">
             <h1>Dramatically Engage</h1>

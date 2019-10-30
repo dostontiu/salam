@@ -3,16 +3,17 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\OrganizationCatalog;
-use common\models\search\OrganizationCatalog as OrganizationCatalogSearch;
+use common\models\Category;
+use common\models\search\CategoryQuery;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
- * OrganizationCatalogController implements the CRUD actions for OrganizationCatalog model.
+ * CategoryController implements the CRUD actions for Category model.
  */
-class OrganizationCatalogController extends Controller
+class CategoryController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +31,12 @@ class OrganizationCatalogController extends Controller
     }
 
     /**
-     * Lists all OrganizationCatalog models.
+     * Lists all Category models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new OrganizationCatalogSearch();
+        $searchModel = new CategoryQuery();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +46,7 @@ class OrganizationCatalogController extends Controller
     }
 
     /**
-     * Displays a single OrganizationCatalog model.
+     * Displays a single Category model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,16 +59,27 @@ class OrganizationCatalogController extends Controller
     }
 
     /**
-     * Creates a new OrganizationCatalog model.
+     * Creates a new Category model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \yii\base\Exception
      */
     public function actionCreate()
     {
-        $model = new OrganizationCatalog();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_id]);
+        $model = new Category();
+        if ($model->load(Yii::$app->request->post())) {
+            $image = UploadedFile::getInstance($model, 'image');
+            if ($image != null){
+                $model->icon = Yii::$app->security->generateRandomString(12).'.'.$image->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/web/uploads/';
+                $path = Yii::$app->params['uploadPath'] . $model->icon;
+            }
+            if ($model->validate() && $model->save()){
+                if ($image != null){
+                    $image->saveAs($path);
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -76,27 +88,38 @@ class OrganizationCatalogController extends Controller
     }
 
     /**
-     * Updates an existing OrganizationCatalog model.
+     * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \yii\base\Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_id]);
+        $image = UploadedFile::getInstance($model, 'image');
+        if ($model->load(Yii::$app->request->post())) {
+            if ($image != null) {
+                $model->icon = Yii::$app->security->generateRandomString(12) . '.' . $image->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/web/uploads/';
+                $path = Yii::$app->params['uploadPath'] . $model->icon;
+            }
+            if ($model->validate() && $model->save()) {
+                if ($image != null) {
+                    $image->saveAs($path);
+                }
+                return $this->redirect(['index']);
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing OrganizationCatalog model.
+     * Deletes an existing Category model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +133,15 @@ class OrganizationCatalogController extends Controller
     }
 
     /**
-     * Finds the OrganizationCatalog model based on its primary key value.
+     * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return OrganizationCatalog the loaded model
+     * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = OrganizationCatalog::findOne($id)) !== null) {
+        if (($model = Category::findOne($id)) !== null) {
             return $model;
         }
 

@@ -2,18 +2,17 @@
 
 use common\models\Region;
 use kartik\file\FileInput;
-use kartik\select2\Select2;
 use msvdev\widgets\mappicker\MapInput;
 use yii\bootstrap\Tabs;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii2mod\rating\StarRating;
+use common\models\Category;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Organization */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $catalogs \common\models\Catalog  */
 ?>
 
 <div class="organization-form">
@@ -31,21 +30,19 @@ use yii2mod\rating\StarRating;
                         'items' => [
                             [
                                 'label' => 'Таджикский',
-                                'content' => $form->field($model, 'name_tj')->textInput(['maxlength' => true]).$form->field($model, 'description_tj')->textarea(['rows' => '6']),
+                                'content' => $form->field($model, 'name_tj')->textInput(['maxlength' => true]).$form->field($model, 'type_tj')->textInput(['maxlength' => true]).$form->field($model, 'description_tj')->textarea(['rows' => '6']),
                                 'options' => ['id' => 'tj'],
                                 'active' => true,
                             ],
                             [
                                 'label' => 'Руский',
-                                'content' => $form->field($model, 'name_ru')->textInput(['maxlength' => true]).$form->field($model, 'description_ru')->textarea(['rows' => '6']),
+                                'content' => $form->field($model, 'name_ru')->textInput(['maxlength' => true]).$form->field($model, 'type_ru')->textInput(['maxlength' => true]).$form->field($model, 'description_ru')->textarea(['rows' => '6']),
                                 'options' => ['id' => 'ru'],
-//                                'headerOptions' => ['...'],
                             ],
                             [
                                 'label' => 'Английский',
-                                'content' => $form->field($model, 'name_en')->textInput(['maxlength' => true]).$form->field($model, 'description_en')->textarea(['rows' => '6']),
+                                'content' => $form->field($model, 'name_en')->textInput(['maxlength' => true]).$form->field($model, 'type_en')->textInput(['maxlength' => true]).$form->field($model, 'description_en')->textarea(['rows' => '6']),
                                 'options' => ['id' => 'en'],
-//                                'headerOptions' => ['...'],
                             ],
                         ],
                         'navType' => 'nav-fill nav-pills',
@@ -82,22 +79,8 @@ use yii2mod\rating\StarRating;
                             'hints' => ['Плохо', 'бедных', 'регулярный', 'хороший', 'великолепный'],
                         ],
                     ]); ?>
-                    <?=
-                    $form->field($model, 'catalog_ids')
-                        ->widget(Select2::classname(), [
-                            'data' => $catalogs,
-                            'options' => ['placeholder' => 'Выберите каталоги ...', 'multiple' => true],
-                            'pluginOptions' => [
-                                'tags' => true,
-                                'tokenSeparators' => [',', ' '],
-//                        'maximumInputLength' => 10
-                            ],
-                        ])->label('Каталоги');
-//                ->listBox((array)$catalogs, ['multiple' => true, 'size'=>5])->label('Каталоги')
-                        /* or, you may use a checkbox list instead */
-        //                ->checkboxList($catalogs)
-        //                ->hint('Select the catalogs');
-                    ?>
+
+                    <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name_ru'), ['prompt' => 'Выберите категория'])?>
 
                     <?= $form->field($model, 'image')->widget(FileInput::classname(), [
                         'options' => ['accept' => 'image/*'],

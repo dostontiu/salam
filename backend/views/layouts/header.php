@@ -118,11 +118,11 @@ AdminAsset::register($this);
                                     </ul>
                                 </div>
                             </li>
-                            <li class="kt-menu__item  kt-menu__item--submenu <?=(Yii::$app->controller->id=='catalog')?'kt-menu__item--open kt-menu__item--here':''?>" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon fa fa-clone"></i><span class="kt-menu__link-text">Каталог</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                            <li class="kt-menu__item  kt-menu__item--submenu <?=(Yii::$app->controller->id=='category')?'kt-menu__item--open kt-menu__item--here':''?>" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon fa fa-clone"></i><span class="kt-menu__link-text">Категория</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                                 <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                                     <ul class="kt-menu__subnav">
-                                        <li class="kt-menu__item <?=($this->context->route=='catalog/index')?'kt-menu__item--active':''?>" aria-haspopup="true"><a href="<?= Yii::$app->homeUrl?>catalog/index" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-list"></i><span class="kt-menu__link-text">Все каталоги</span></a></li>
-                                        <li class="kt-menu__item <?=($this->context->route=='catalog/create')?'kt-menu__item--active':''?>" aria-haspopup="true"><a href="<?= Yii::$app->homeUrl?>catalog/create" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-plus-1"></i><span class="kt-menu__link-text">Добавить</span></a></li>
+                                        <li class="kt-menu__item <?=($this->context->route=='category/index')?'kt-menu__item--active':''?>" aria-haspopup="true"><a href="<?= Yii::$app->homeUrl?>category/index" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-list"></i><span class="kt-menu__link-text">Все категори</span></a></li>
+                                        <li class="kt-menu__item <?=($this->context->route=='category/create')?'kt-menu__item--active':''?>" aria-haspopup="true"><a href="<?= Yii::$app->homeUrl?>category/create" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-plus-1"></i><span class="kt-menu__link-text">Добавить</span></a></li>
                                     </ul>
                                 </div>
                             </li>

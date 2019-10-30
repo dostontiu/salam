@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Organization */
-/* @var $catalogs common\models\Organization */
+/* @var $categories common\models\Organization */
 
 $this->title = Yii::t('app', 'Обновить организацию : {name}', [
     'name' => $model->name_ru,
@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
     <?= $this->render('_form', [
         'model' => $model,
-        'catalogs' => $catalogs,
     ]) ?>
 
 </div>

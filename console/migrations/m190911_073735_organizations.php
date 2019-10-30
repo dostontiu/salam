@@ -16,12 +16,16 @@ class m190911_073735_organizations extends Migration
             'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
             'region_id' => $this->integer()->null(),
+            'category_id' => $this->integer()->null(),
             'rating' => $this->string()->notNull(), // this should be integer
             'photo' => $this->string()->notNull(),
             'gps' => $this->string()->notNull(),
             'name_tj' => $this->string()->null(),
             'name_en' => $this->string()->null(),
             'name_ru' => $this->string()->null(),
+            'type_tj' => $this->string()->null(),
+            'type_en' => $this->string()->null(),
+            'type_ru' => $this->string()->null(),
             'description_tj' => $this->string()->null(),
             'description_en' => $this->string()->null(),
             'description_ru' => $this->string()->null(),
@@ -58,6 +62,22 @@ class m190911_073735_organizations extends Migration
             'id',
             'CASCADE'
         );
+
+        // creates index for column `region_id`
+        $this->createIndex(
+            'idx-organization-category_id',
+            'organization',
+            'category_id'
+        );
+        // add foreign key for table `region`
+        $this->addForeignKey(
+            'fk-organization-category_id',
+            'organization',
+            'category_id',
+            'category',
+            'id',
+            'CASCADE'
+        );
     }
 
     public function down()
@@ -77,6 +97,15 @@ class m190911_073735_organizations extends Migration
         );
         $this->dropIndex(
             'idx-organization-region_id',
+            'organization'
+        );
+
+        $this->dropForeignKey(
+            'fk-organization-category_id',
+            'organization'
+        );
+        $this->dropIndex(
+            'idx-organization-category_id',
             'organization'
         );
 

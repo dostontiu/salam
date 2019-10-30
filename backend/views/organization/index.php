@@ -1,6 +1,5 @@
 <?php
 
-use common\models\OrganizationCatalog;
 use common\models\Region;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -9,7 +8,6 @@ use yii2mod\rating\StarRating;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\OrganizationQuery */
-/* @var $catalogFilter backend\controllers\OrganizationController */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Организации');
@@ -67,6 +65,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'value' => 'region.name_ru'
                     ],
+                    'type_tj',
+                    'type_en',
+                    'type_ru',
                     [
                         'attribute' => 'rating',
                         'format' => 'text',
@@ -87,23 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ),
                     ],
                     [
-                        'attribute' => 'catalog',
-                        'headerOptions' => ['style' => 'color:#5867dd'],
-                        'filter' =>  Html::activeDropDownList(
-                            $searchModel,
-                            'catalog',
-                            $catalogFilter,
-                            ['class'=>'form-control','prompt' => 'Все']
-                        ),
-                        'format' => 'raw',
-                        'value' => function($model){
-                            $data_calatalog = OrganizationCatalog::find()->with('catalog')->where(['organization_id' => $model->id])->all();
-                            $hh = '';
-                            foreach ($data_calatalog as $item) {
-                                $hh .= '-'.$item->catalog->name_ru.'<br>';
-                            }
-                            return $hh;
-                        }
+                        'attribute' => 'category_id'
                     ],
 //                    [
 //                        'attribute' => 'Фото',
@@ -136,7 +121,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'data-method' => 'post',
                                 ]);
                             }
-
                         ],
                     ],
                 ],

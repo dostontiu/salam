@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
-use common\models\Catalog;
-use common\models\OrganizationWithCatalog;
+use common\models\Category;
+use common\models\OrganizationWithCategory;
 use Yii;
 use common\models\Organization;
 use common\models\search\OrganizationQuery;
@@ -44,7 +44,6 @@ class OrganizationController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'catalogFilter' => $this->catalogFilter(),
         ]);
     }
 
@@ -69,7 +68,7 @@ class OrganizationController extends Controller
      */
     public function actionCreate()
     {
-        $model = new OrganizationWithCatalog();
+        $model = new Organization();
         if ($model->load(Yii::$app->request->post())){
             $model->user_id = Yii::$app->user->id;
             $image = UploadedFile::getInstance($model, 'image');
@@ -82,13 +81,11 @@ class OrganizationController extends Controller
                 if ($image != null){
                     $image->saveAs($path);
                 }
-                $model->saveCatalogs();
                 return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
             'model' => $model,
-            'catalogs' => $model->getAvailableCatalogs(),
         ]);
     }
 
@@ -102,8 +99,7 @@ class OrganizationController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = OrganizationWithCatalog::findOne($id);
-        $model->loadCatalogs();
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');
@@ -116,14 +112,12 @@ class OrganizationController extends Controller
                 if ($image != null){
                     $image->saveAs($path);
                 }
-                $model->saveCatalogs();
                 return $this->redirect(['index']);
             }
         }
 
         return $this->render('update', [
             'model' => $model,
-            'catalogs' => $model->getAvailableCatalogs(),
         ]);
     }
 
@@ -155,18 +149,5 @@ class OrganizationController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    function catalogFilter(){
-        $i=0;
-        foreach (Catalog::find()->all() as $catalog) {
-            $data = '';
-            $i++;
-            foreach ($catalog->organizationCatalogs as $a) {
-                $data .= $a->organization_id. ',';
-            }
-            $catalog_name[$i.'|'.$data] = $catalog->name_ru;
-        }
-        return $catalog_name;
     }
 }

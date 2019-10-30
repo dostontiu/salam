@@ -17,17 +17,20 @@ use yii\helpers\Html;
  * @property string $name_tj
  * @property string $name_en
  * @property string $name_ru
+ * @property string $type_tj
+ * @property string $type_en
+ * @property string $type_ru
  * @property string $description_tj
  * @property string $description_en
  * @property string $description_ru
  *
  * @property Region $region
  * @property User $user
- * @property OrganizationCatalog[] $organizationCatalogs
+ * @property Category[] $categories
  */
 class Organization extends \yii\db\ActiveRecord
 {
-    public $catalog;
+    public $category;
     public $image;
     /**
      * {@inheritdoc}
@@ -43,11 +46,12 @@ class Organization extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'rating', 'gps'], 'required'],
-            [['user_id', 'region_id'], 'integer'],
-            [['rating', 'photo', 'gps', 'name_tj', 'name_en', 'name_ru', 'description_tj', 'description_en', 'description_ru'], 'string', 'max' => 255],
+            [['user_id', 'rating', 'gps', 'category_id'], 'required'],
+            [['user_id', 'region_id', 'category_id'], 'integer'],
+            [['rating', 'photo', 'gps', 'name_tj', 'name_en', 'name_ru', 'type_tj', 'type_en', 'type_ru', 'description_tj', 'description_en', 'description_ru'], 'string', 'max' => 255],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
             [['image'], 'safe'],
             [['image'], 'file', 'extensions'=>'jpg, gif, png'],
             [['image'], 'file', 'maxSize'=>'1048580'],
@@ -69,11 +73,15 @@ class Organization extends \yii\db\ActiveRecord
             'name_tj' => 'Название (ТЖ)',
             'name_en' => 'Название (EN)',
             'name_ru' => 'Название (РУ)',
+            'type_tj' => 'Тип (ТЖ)',
+            'type_en' => 'Тип (EN)',
+            'type_ru' => 'Тип (РУ)',
             'fullName' => 'Название',
             'description_tj' => 'Описание (ТЖ)',
             'description_en' => 'Описание (EN)',
             'description_ru' => 'Описание (РУ)',
-            'catalog' => 'Каталог',
+            'category' => 'Категория',
+            'category_id' => 'Категория',
         ];
     }
 
@@ -101,14 +109,14 @@ class Organization extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrganizationCatalogs()
-    {
-        return $this->hasMany(OrganizationCatalog::className(), ['organization_id' => 'id']);
+    public function getCategory(){
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
+
 
     public function extraFields()
     {
-        return ['organizationCatalogs', 'region'];
+        return ['region'];
     }
 
     public function beforeSave($insert)
@@ -116,7 +124,7 @@ class Organization extends \yii\db\ActiveRecord
         if (!parent::beforeSave($insert)) {
             return false;
         }
-        if ( ($this->name_tj!=null && $this->description_tj!=null) || ($this->name_en!=null && $this->description_en!=null) || ($this->name_ru!=null && $this->description_ru!=null) ){
+        if ( ($this->name_tj!=null && $this->type_tj!=null && $this->description_tj!=null) || ($this->name_en!=null && $this->type_en!=null && $this->description_en!=null) || ($this->name_ru!=null && $this->type_ru!=null && $this->description_ru!=null) ){
             if ($this->photo==null){
                 Yii::$app->session->setFlash('error', "Нужно загрузить изображение");
                 return false;
