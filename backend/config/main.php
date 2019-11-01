@@ -1,8 +1,5 @@
 <?php
 
-use app\modules\api\controllers\OrganizationController;
-use yii\rest\UrlRule;
-
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -28,10 +25,6 @@ return [
                     'usernameField' => 'username',
                 ],
             ],
-        ],
-        'api' => [
-            'class' => 'app\modules\api\Module',
-            'layout' => false,
         ],
     ],
     'components' => [
@@ -84,6 +77,7 @@ return [
         'allowActions' => [
             'site/logout',
             'api/*',
+//            '*',
 //            'rbac/*',
 //            'organization/*'
         ]

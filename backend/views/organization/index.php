@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'fullName:html',
+                    'allType:html',
                     [
                         'attribute' => 'region_id',
                         'label' => 'Область',
@@ -65,9 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'value' => 'region.name_ru'
                     ],
-                    'type_tj',
-                    'type_en',
-                    'type_ru',
                     [
                         'attribute' => 'rating',
                         'format' => 'text',
@@ -88,7 +86,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ),
                     ],
                     [
-                        'attribute' => 'category_id'
+                        'attribute' => 'category_id',
+                        'value' => 'category.name_ru'
                     ],
 //                    [
 //                        'attribute' => 'Фото',

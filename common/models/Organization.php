@@ -11,6 +11,7 @@ use yii\helpers\Html;
  * @property int $id
  * @property int $user_id
  * @property int $region_id
+ * @property int $category_id
  * @property string $rating
  * @property string $photo
  * @property string $gps
@@ -26,11 +27,11 @@ use yii\helpers\Html;
  *
  * @property Region $region
  * @property User $user
- * @property Category[] $categories
+ * @property Category $category
+ * @property OrgComment[] $orgComments
  */
 class Organization extends \yii\db\ActiveRecord
 {
-    public $category;
     public $image;
     /**
      * {@inheritdoc}
@@ -77,10 +78,10 @@ class Organization extends \yii\db\ActiveRecord
             'type_en' => 'Тип (EN)',
             'type_ru' => 'Тип (РУ)',
             'fullName' => 'Название',
+            'allType' => 'Название типы',
             'description_tj' => 'Описание (ТЖ)',
             'description_en' => 'Описание (EN)',
             'description_ru' => 'Описание (РУ)',
-            'category' => 'Категория',
             'category_id' => 'Категория',
         ];
     }
@@ -98,6 +99,10 @@ class Organization extends \yii\db\ActiveRecord
         return Html::a(($this->name_ru)?$this->name_ru:'На другом языке',['view', 'id' => $this->id]);
     }
 
+    public function getAllType() {
+        return $this->type_ru ? $this->type_ru : 'На другом языке';
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -113,10 +118,14 @@ class Organization extends \yii\db\ActiveRecord
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
+    public function getOrgComments()
+    {
+        return $this->hasMany(OrgComment::className(), ['org_id' => 'id'])->where(['status' => 1])->with('user');
+    }
 
     public function extraFields()
     {
-        return ['region'];
+        return ['region', 'category'];
     }
 
     public function beforeSave($insert)

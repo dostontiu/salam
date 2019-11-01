@@ -10,13 +10,6 @@ use yii\widgets\ActiveForm;
 
 <div class="region-form col-md-4 col-md-offset-4">
     <div class="kt-portlet">
-        <div class="kt-portlet__head">
-            <div class="kt-portlet__head-label">
-                <h3 class="kt-portlet__head-title">
-                    Создайте новый
-                </h3>
-            </div>
-        </div>
 
         <?php $form = ActiveForm::begin([
             'id' => 'region-form',
