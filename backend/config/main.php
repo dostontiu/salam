@@ -13,14 +13,14 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'language' => 'ru',
-    'defaultRoute' => 'organization',
+    'defaultRoute' => 'site',
     'modules' => [
         'rbac' => [
             'class' => 'mdm\admin\Module',
             'controllerMap' => [
                 'assignment' => [
                     'class' => 'mdm\admin\controllers\AssignmentController',
-                    /* 'userClassName' => 'app\models\User', */
+                     'userClassName' => 'common\models\User',
                     'idField' => 'id',
                     'usernameField' => 'username',
                 ],
@@ -60,7 +60,6 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-//                'api' => 'admin/api',
                 'logout' => 'site/logout',
                 'login' => 'site/login',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
@@ -75,11 +74,8 @@ return [
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-            'site/logout',
-            'api/*',
+            'site/*',
 //            '*',
-//            'rbac/*',
-//            'organization/*'
         ]
     ],
     'params' => $params,
