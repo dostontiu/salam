@@ -45,4 +45,14 @@ class User extends UserModel
         } catch (Exception $e) {
         }
     }
+
+    public function fields()
+    {
+        return [
+            'id',
+            'username',
+            'email',
+            'status',
+        ];
+    }
 }

@@ -125,7 +125,7 @@ class Organization extends \yii\db\ActiveRecord
 
     public function extraFields()
     {
-        return ['region', 'category'];
+        return ['region', 'category', 'comments' => 'orgComments'];
     }
 
     public function beforeSave($insert)

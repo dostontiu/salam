@@ -26,6 +26,9 @@ return [
                 ],
             ],
         ],
+        'api' => [
+            'class' => 'app\modules\api\Module',
+        ],
     ],
     'components' => [
         'request' => [
@@ -58,12 +61,13 @@ return [
 
         'urlManager' => [
             'enablePrettyUrl' => true,
+//            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['api/organization', 'api/region', 'api/category', 'api/comment']],
                 'logout' => 'site/logout',
                 'login' => 'site/login',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
-//                ['class' => UrlRule::className(), 'controller' => 'organizational'],
             ],
         ],
         'authManager' => [
