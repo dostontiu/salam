@@ -7,12 +7,14 @@ use common\models\User;
 
 /**
  * Signup form
+ * * @property string $type_social
  */
 class SignUpForm extends Model
 {
     public $username;
     public $email;
     public $password;
+    public $type_social;
 
 
     /**
@@ -34,6 +36,8 @@ class SignUpForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
+            ['type_social', 'string', 'max' => 255],
         ];
     }
 
@@ -44,6 +48,7 @@ class SignUpForm extends Model
             'username' => 'Имя пользователя',
             'email' => 'Электронное письмо',
             'password' => 'Пароль',
+            'type_social' => 'Социальный тип',
         ];
     }
 
@@ -61,6 +66,7 @@ class SignUpForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->type_social = $this->type_social;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateAccessToken();

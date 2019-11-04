@@ -16,6 +16,7 @@ use yii\base\NotSupportedException;
  * @property string $verification_token
  * @property string $email
  * @property string $auth_key
+ * @property string $type_social
  * @property string $access_token
  * @property integer $status
  * @property integer $created_at
@@ -52,6 +53,7 @@ class User extends UserModel
             'id',
             'username',
             'email',
+            'type_social',
             'status',
         ];
     }
