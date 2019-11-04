@@ -92,6 +92,44 @@ function rate($id)
                 </div>
             </div>
         </div>
+
+        <!--<div class="kt-portlet kt-portlet--height-fluid kt-widget19">
+            <div class="kt-portlet__body kt-portlet__body--fit kt-portlet__body--unfill">
+                <div class="kt-widget19__pic kt-portlet-fit--top kt-portlet-fit--sides"
+                     style="min-height: 500px; border-radius: 4px; background-size: contain; background-image: url(<?/*= Yii::$app->homeUrl . 'uploads/' . $model->photo */?>)">
+                    <h3 class="kt-widget19__title kt-font-light"><?/*= $model->name_ru */?></h3>
+                    <div class="kt-widget19__shadow"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="kt-portlet kt-portlet--head--noborder kt-portlet--height-fluid">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Место нахождения</h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-widget15">
+                    <?php /*$form = ActiveForm::begin();
+                    echo $form->field($model, 'gps')->widget(
+                        MapInput::className(),
+                        [
+                            'language' => 'ru-RU', // map language, default is the same as in the app
+                            'service' => 'yandex', // map service provider, "google" or "yandex", default "google"
+                            'mapWidth' => '100%', // width map container, default "500px"
+                            'mapHeight' => '400px', // height map container, default "500px"
+                            'mapZoom' => '12', // map zoom value, default "10"
+//                            'mapCenter' => [55.753338, 37.622861], // coordinates center map with an empty attribute, default Moscow
+                        ]
+                    )->label(false);
+                    ActiveForm::end();
+                    */?>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="col-md-6">
         <!--begin:: Widgets/Support Tickets -->
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">
@@ -126,45 +164,7 @@ function rate($id)
                 </div>
             </div>
         </div>
-
         <!--end:: Widgets/Support Tickets -->
-    </div>
-    <div class="col-md-6">
-        <div class="kt-portlet kt-portlet--height-fluid kt-widget19">
-            <div class="kt-portlet__body kt-portlet__body--fit kt-portlet__body--unfill">
-                <div class="kt-widget19__pic kt-portlet-fit--top kt-portlet-fit--sides"
-                     style="min-height: 500px; border-radius: 4px; background-size: contain; background-image: url(<?= Yii::$app->homeUrl . 'uploads/' . $model->photo ?>)">
-                    <h3 class="kt-widget19__title kt-font-light"><?= $model->name_ru ?></h3>
-                    <div class="kt-widget19__shadow"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="kt-portlet kt-portlet--head--noborder kt-portlet--height-fluid">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">Место нахождения</h3>
-                </div>
-            </div>
-            <div class="kt-portlet__body">
-                <div class="kt-widget15">
-                    <?php $form = ActiveForm::begin();
-                    echo $form->field($model, 'gps')->widget(
-                        MapInput::className(),
-                        [
-                            'language' => 'ru-RU', // map language, default is the same as in the app
-                            'service' => 'yandex', // map service provider, "google" or "yandex", default "google"
-                            'mapWidth' => '100%', // width map container, default "500px"
-                            'mapHeight' => '400px', // height map container, default "500px"
-                            'mapZoom' => '12', // map zoom value, default "10"
-//                            'mapCenter' => [55.753338, 37.622861], // coordinates center map with an empty attribute, default Moscow
-                        ]
-                    )->label(false);
-                    ActiveForm::end();
-                    ?>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 </div>

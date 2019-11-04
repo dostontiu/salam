@@ -70,7 +70,7 @@ class Category extends \yii\db\ActiveRecord
 
     public function extraFields()
     {
-        return ['categories', 'organizationCatalogs'];
+        return ['organizations'];
     }
 
     public function beforeSave($insert)
