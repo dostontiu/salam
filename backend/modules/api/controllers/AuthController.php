@@ -2,13 +2,16 @@
 
 namespace app\modules\api\controllers;
 
+use Yii;
 use common\models\User;
 use common\models\user\SignUpForm;
-use Yii;
+use common\models\user\ChangePassword;
+use common\models\user\PasswordReset;
 
 class AuthController extends ApiActiveController
 {
     public $modelClass = 'common\models\User';
+
 
     public function actions()
     {
@@ -17,13 +20,18 @@ class AuthController extends ApiActiveController
         return $actions;
     }
 
+
     public function verbs()
     {
         $verbs = parent::verbs();
-        $verbs['login'] = ['POST'];
         $verbs['register'] = ['POST'];
+        $verbs['login'] = ['POST'];
+        $verbs['social'] = ['POST'];
+        $verbs['reset'] = ['POST'];
+        $verbs['change'] = ['POST'];
         return $verbs;
     }
+
 
     public function actionLogin()
     {
@@ -48,6 +56,7 @@ class AuthController extends ApiActiveController
         ];
     }
 
+
     public function actionRegister(){
         $model = new SignupForm();
         $data = Yii::$app->request->getQueryParams();
@@ -68,6 +77,7 @@ class AuthController extends ApiActiveController
             return $model->getErrors();
         }
     }
+
 
     public function actionSocial()
     {
@@ -98,6 +108,57 @@ class AuthController extends ApiActiveController
         } else {
             return $model->getErrors();
         }
+    }
 
+
+    public function actionReset()
+    {
+        $data = Yii::$app->request->getQueryParams();
+        if(empty($data['email'])){
+            throw new \yii\web\BadRequestHttpException("Вы должны ввести имя пользователя, электронное почта");
+        }
+
+        $model = new PasswordReset();
+        $model->email = $data['email'];
+
+        if ($model->sendToEmail()){
+            return [
+                'status' => true,
+                'message' => 'Ваш новый пароль отправлен по электронной почте'
+            ];
+        } else {
+            return [
+                'status' => false,
+                'message' => 'Это электронной почта не существует наш системе'
+            ];
+        }
+    }
+
+
+    public function actionChange()
+    {
+        $data = Yii::$app->request->getQueryParams();
+        $auth = $_SERVER['HTTP_AUTHORIZATION'];
+        if(empty($auth) || empty($data['old_password']) || empty($data['new_password'])  || empty($data['retype_password'])){
+            throw new \yii\web\BadRequestHttpException("Вы должны ввести пароль");
+        }
+        $model = new ChangePassword();
+        $model->accessToken = substr($auth, 7);
+        $model->oldPassword = $data['old_password'];
+        $model->newPassword = $data['new_password'];
+        $model->retypePassword = $data['retype_password'];
+
+        if ($model->change()){
+            return [
+                'status' => true,
+                'message' => 'Ваш пароль изменен на '.$model->newPassword
+            ];
+        } else {
+            return [
+                'status' => false,
+                'message' => 'Пожалуйста, исправьте ошибку',
+                'error' => $model->getErrors()
+            ];
+        }
     }
 }
