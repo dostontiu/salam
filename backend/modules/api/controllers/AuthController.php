@@ -7,11 +7,21 @@ use common\models\User;
 use common\models\user\SignUpForm;
 use common\models\user\ChangePassword;
 use common\models\user\PasswordReset;
+use yii\filters\auth\HttpBearerAuth;
 
 class AuthController extends ApiActiveController
 {
     public $modelClass = 'common\models\User';
 
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => HttpBearerAuth::className(),
+            'only' => ['change'],
+        ];
+        return $behaviors;
+    }
 
     public function actions()
     {
@@ -129,7 +139,7 @@ class AuthController extends ApiActiveController
         } else {
             return [
                 'status' => false,
-                'message' => 'Это электронной почта не существует наш системе'
+                'message' => 'Это электронной почта не существует наш система'
             ];
         }
     }
@@ -140,7 +150,7 @@ class AuthController extends ApiActiveController
         $data = Yii::$app->request->getQueryParams();
         $auth = $_SERVER['HTTP_AUTHORIZATION'];
         if(empty($auth) || empty($data['old_password']) || empty($data['new_password'])  || empty($data['retype_password'])){
-            throw new \yii\web\BadRequestHttpException("Вы должны ввести пароль");
+            throw new \yii\web\BadRequestHttpException("Вы должны ввести старый пароль, новый пароль, введите пароль еще раз");
         }
         $model = new ChangePassword();
         $model->accessToken = substr($auth, 7);

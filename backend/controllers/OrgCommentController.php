@@ -96,13 +96,18 @@ class OrgCommentController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionChangeStatus($id)
     {
         $model = $this->findModel($id);
         ($model->status == 0) ? $model->status = 1 : $model->status = 0;
         $model->save();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
