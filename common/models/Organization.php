@@ -33,6 +33,7 @@ use yii\helpers\Html;
 class Organization extends \yii\db\ActiveRecord
 {
     public $image;
+    public $distance;
     /**
      * {@inheritdoc}
      */
@@ -53,7 +54,7 @@ class Organization extends \yii\db\ActiveRecord
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['image'], 'safe'],
+            [['image', 'distance'], 'safe'],
             [['image'], 'file', 'extensions'=>'jpg, gif, png'],
             [['image'], 'file', 'maxSize'=>'1048580'],
         ];
@@ -83,6 +84,7 @@ class Organization extends \yii\db\ActiveRecord
             'description_en' => 'Описание (EN)',
             'description_ru' => 'Описание (РУ)',
             'category_id' => 'Категория',
+            'distance' => 'Дистанция',
         ];
     }
 
@@ -143,5 +145,12 @@ class Organization extends \yii\db\ActiveRecord
             Yii::$app->session->setFlash('error', "Пожалуйста, укажите хотя бы один язык");
             return false;
         }
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields['distance'] ='distance';
+        return $fields;
     }
 }
