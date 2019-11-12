@@ -66,8 +66,14 @@ class Filter extends \yii\db\ActiveRecord
         return Html::a(($this->name_ru)?$this->name_ru:'На другом языке',['view', 'id' => $this->id]);
     }
 
-    public function extraFields()
+    public function fields()
     {
-        return ['organizationFilters'];
+        return [
+            'id',
+            'name_tj',
+            'name_en',
+            'name_ru',
+            'organizations' => 'organizationFilters'
+        ];
     }
 }

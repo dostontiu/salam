@@ -63,6 +63,13 @@ class OrgFilter extends \yii\db\ActiveRecord
         return $this->hasOne(Organization::className(), ['id' => 'organization_id']);
     }
 
+    public function fields()
+    {
+        return [
+            'organization',
+        ];
+    }
+
 
     public function extraFields()
     {
