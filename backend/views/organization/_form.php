@@ -2,6 +2,7 @@
 
 use common\models\Region;
 use kartik\file\FileInput;
+use kartik\select2\Select2;
 use msvdev\widgets\mappicker\MapInput;
 use yii\bootstrap\Tabs;
 use yii\helpers\ArrayHelper;
@@ -13,6 +14,7 @@ use common\models\Category;
 /* @var $this yii\web\View */
 /* @var $model common\models\Organization */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $filters \common\models\Filter  */
 ?>
 
 <div class="organization-form">
@@ -81,6 +83,19 @@ use common\models\Category;
                     ]); ?>
 
                     <?= $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name_ru'), ['prompt' => 'Выберите категория'])?>
+
+                    <?=
+                    $form->field($model, 'filter_ids')
+                        ->widget(Select2::classname(), [
+                            'data' => $filters,
+                            'options' => ['placeholder' => 'Выберите филтери ...', 'multiple' => true],
+                            'pluginOptions' => [
+                                'tags' => true,
+                                'tokenSeparators' => [',', ' '],
+//                        'maximumInputLength' => 10
+                            ],
+                        ])->label('Филтери');
+                    ?>
 
                     <?= $form->field($model, 'image')->widget(FileInput::classname(), [
                         'options' => ['accept' => 'image/*'],

@@ -14,6 +14,7 @@ class OrganizationQuery extends Organization
     /* your calculated attribute */
     public $fullName;
     public $allType;
+    public $filter;
 
     /**
      * {@inheritdoc}
@@ -22,7 +23,7 @@ class OrganizationQuery extends Organization
     {
         return [
             [['id', 'user_id', 'region_id', 'category_id'], 'integer'],
-            [['rating', 'photo', 'gps', 'name_tj', 'name_en', 'name_ru', 'type_tj', 'type_en', 'type_ru', 'description_tj', 'description_en', 'description_ru', 'fullName', 'allType'], 'safe'],
+            [['rating', 'photo', 'gps', 'name_tj', 'name_en', 'name_ru', 'type_tj', 'type_en', 'type_ru', 'description_tj', 'description_en', 'description_ru', 'fullName', 'allType', 'filter'], 'safe'],
         ];
     }
 
@@ -80,6 +81,19 @@ class OrganizationQuery extends Organization
             return $dataProvider;
         }
 
+        if (empty($this->filter)){
+            $filter_filter = [];
+        } else {
+            $fltr = explode('|',$this->filter)[1]; //*******
+            if (!empty($fltr)){
+                $filter_filter = ['in', 'id',explode(',', $fltr)];
+            } else {
+                $filter_filter = ['id' => 0];
+            }
+        }
+
+
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -103,7 +117,8 @@ class OrganizationQuery extends Organization
             ->andFilterWhere(['like', 'gps', $this->gps])
             ->andFilterWhere(['like', 'description_tj', $this->description_tj])
             ->andFilterWhere(['like', 'description_en', $this->description_en])
-            ->andFilterWhere(['like', 'description_en', $this->description_en]);
+            ->andFilterWhere(['like', 'description_en', $this->description_en])
+            ->andFilterWhere($filter_filter);
 
         return $dataProvider;
     }

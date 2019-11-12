@@ -1,5 +1,6 @@
 <?php
 
+use common\models\OrgFilter;
 use common\models\Region;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -8,6 +9,7 @@ use yii2mod\rating\StarRating;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\OrganizationQuery */
+/* @var $filterFilter backend\controllers\OrganizationController */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Организации');
@@ -84,6 +86,25 @@ $this->params['breadcrumbs'][] = $this->title;
                             array(1=>"1 +",2=>"2+",3=>"3+",4=>"4+",5=>"5+"),
                             ['class'=>'form-control','prompt' => 'Все']
                         ),
+                    ],
+                    [
+                        'attribute' => 'filter',
+                        'headerOptions' => ['style' => 'color:#5867dd'],
+                        'filter' =>  Html::activeDropDownList(
+                            $searchModel,
+                            'filter',
+                            $filterFilter,
+                            ['class'=>'form-control','prompt' => 'Все']
+                        ),
+                        'format' => 'raw',
+                        'value' => function($model){
+                            $data_filter = OrgFilter::find()->with('filter')->where(['organization_id' => $model->id])->all();
+                            $hh = '';
+                            foreach ($data_filter as $item) {
+                                $hh .= '-'.$item->filter->name_ru.'<br>';
+                            }
+                            return $hh;
+                        }
                     ],
                     [
                         'attribute' => 'category_id',

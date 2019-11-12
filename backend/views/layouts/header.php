@@ -142,6 +142,14 @@ AdminAsset::register($this);
                                     </ul>
                                 </div>
                             </li>
+                            <li class="kt-menu__item  kt-menu__item--submenu <?=(Yii::$app->controller->id=='filter')?'kt-menu__item--open kt-menu__item--here':''?>" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon fa fa-address-card"></i><span class="kt-menu__link-text">Филтери</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                                <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+                                    <ul class="kt-menu__subnav">
+                                        <li class="kt-menu__item <?=($this->context->route=='filter/index')?'kt-menu__item--active':''?>" aria-haspopup="true"><a href="<?= Yii::$app->homeUrl?>filter/index" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-list"></i><span class="kt-menu__link-text">Все филтери</span></a></li>
+                                        <li class="kt-menu__item <?=($this->context->route=='filter/create')?'kt-menu__item--active':''?>" aria-haspopup="true"><a href="<?= Yii::$app->homeUrl?>filter/create" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-plus-1"></i><span class="kt-menu__link-text">Добавить</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>

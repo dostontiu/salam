@@ -3,7 +3,9 @@
 namespace backend\controllers;
 
 use common\models\Category;
+use common\models\Filter;
 use common\models\OrganizationWithCategory;
+use common\models\OrgWithFilter;
 use Yii;
 use common\models\Organization;
 use common\models\search\OrganizationQuery;
@@ -44,6 +46,7 @@ class OrganizationController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'filterFilter' => $this->filterFilter(),
         ]);
     }
 
@@ -68,7 +71,7 @@ class OrganizationController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Organization();
+        $model = new OrgWithFilter();
         if ($model->load(Yii::$app->request->post())){
             $model->user_id = Yii::$app->user->id;
             $image = UploadedFile::getInstance($model, 'image');
@@ -81,11 +84,13 @@ class OrganizationController extends Controller
                 if ($image != null){
                     $image->saveAs($path);
                 }
+                $model->saveFilters();
                 return $this->redirect(['index']);
             }
         }
         return $this->render('create', [
             'model' => $model,
+            'filters' => $model->getAvailableFilters()
         ]);
     }
 
@@ -99,7 +104,8 @@ class OrganizationController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = OrgWithFilter::findOne($id);
+        $model->loadFilters();
 
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');
@@ -112,12 +118,14 @@ class OrganizationController extends Controller
                 if ($image != null){
                     $image->saveAs($path);
                 }
+                $model->saveFilters();
                 return $this->redirect(['index']);
             }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'filters' => $model->getAvailableFilters()
         ]);
     }
 
@@ -149,5 +157,18 @@ class OrganizationController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    function filterFilter(){
+        $i=0;
+        foreach (Filter::find()->all() as $filter) {
+            $data = '';
+            $i++;
+            foreach ($filter->organizationFilters as $a) {
+                $data .= $a->organization_id. ',';
+            }
+            $filter_name[$i.'|'.$data] = $filter->name_ru;
+        }
+        return $filter_name;
     }
 }

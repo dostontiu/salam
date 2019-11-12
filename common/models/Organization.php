@@ -29,11 +29,13 @@ use yii\helpers\Html;
  * @property User $user
  * @property Category $category
  * @property OrgComment[] $orgComments
+ * @property OrgFilter[] $orgFilters
  */
 class Organization extends \yii\db\ActiveRecord
 {
     public $image;
     public $distance;
+    public $filter;
     /**
      * {@inheritdoc}
      */
@@ -85,6 +87,7 @@ class Organization extends \yii\db\ActiveRecord
             'description_ru' => 'Описание (РУ)',
             'category_id' => 'Категория',
             'distance' => 'Дистанция',
+            'filter' => 'Филтер',
         ];
     }
 
@@ -125,9 +128,14 @@ class Organization extends \yii\db\ActiveRecord
         return $this->hasMany(OrgComment::className(), ['org_id' => 'id'])->where(['status' => 1])->with('user');
     }
 
+    public function getOrgFilters()
+    {
+        return $this->hasMany(OrgFilter::className(), ['organization_id' => 'id'])->with('filter');
+    }
+
     public function extraFields()
     {
-        return ['region', 'category', 'comments' => 'orgComments', 'user'];
+        return ['region', 'category', 'comments' => 'orgComments', 'user', 'orgFilters'];
     }
 
     public function beforeSave($insert)
