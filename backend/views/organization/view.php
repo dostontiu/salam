@@ -9,7 +9,7 @@ use yii2mod\rating\StarRating;
 /* @var $this yii\web\View */
 /* @var $model common\models\Organization */
 
-$this->title = 'Организацию : ' . $model->name_ru;
+$this->title = 'Организация : ' . $model->name_ru;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Organizations'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -93,11 +93,11 @@ function rate($id)
             </div>
         </div>
 
-        <!--<div class="kt-portlet kt-portlet--height-fluid kt-widget19">
+        <div class="kt-portlet kt-portlet--height-fluid kt-widget19">
             <div class="kt-portlet__body kt-portlet__body--fit kt-portlet__body--unfill">
                 <div class="kt-widget19__pic kt-portlet-fit--top kt-portlet-fit--sides"
-                     style="min-height: 500px; border-radius: 4px; background-size: contain; background-image: url(<?/*= Yii::$app->homeUrl . 'uploads/' . $model->photo */?>)">
-                    <h3 class="kt-widget19__title kt-font-light"><?/*= $model->name_ru */?></h3>
+                     style="min-height: 500px; border-radius: 4px; background-size: contain; background-image: url(<?= Yii::$app->homeUrl . 'uploads/' . $model->photo ?>)">
+                    <h3 class="kt-widget19__title kt-font-light"><?= $model->name_ru ?></h3>
                     <div class="kt-widget19__shadow"></div>
                 </div>
             </div>
@@ -111,7 +111,7 @@ function rate($id)
             </div>
             <div class="kt-portlet__body">
                 <div class="kt-widget15">
-                    <?php /*$form = ActiveForm::begin();
+                    <?php $form = ActiveForm::begin();
                     echo $form->field($model, 'gps')->widget(
                         MapInput::className(),
                         [
@@ -124,10 +124,10 @@ function rate($id)
                         ]
                     )->label(false);
                     ActiveForm::end();
-                    */?>
+                    ?>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
     <div class="col-md-6">
         <!--begin:: Widgets/Support Tickets -->

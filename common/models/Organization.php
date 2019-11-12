@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%organization}}".
@@ -158,7 +159,37 @@ class Organization extends \yii\db\ActiveRecord
     public function fields()
     {
         $fields = parent::fields();
+        unset($fields['user_id'], $fields['region_id'], $fields['category_id']);
+
+        $fields['distance'] = function ($model){
+            return ($model->distance !== null) ? $model->distance.' км' : null;
+        };
+        $fields['photo'] = function($model){
+            return Url::base(true).'/uploads/'.$model->photo;
+        };
+        $fields['latitude'] = function($model){
+            return explode('@',$model->gps)[0];
+        };
+        $fields['longitude'] = function($model){
+            return explode('@',$model->gps)[1];
+        };
+        $fields['filters'] = function ($model){
+            return $model->getFilters($model->id);
+        };
         $fields['distance'] ='distance';
+        $fields['category'] ='category';
+        $fields['user'] ='user';
+        $fields['region'] ='region';
         return $fields;
+    }
+
+    public function getFilters($org_id)
+    {
+        $query = (new \yii\db\Query())
+            ->select('id, filter.name_tj, filter.name_en, filter.name_ru')
+            ->where(['organization_id' => $org_id])
+            ->from('org_filter')
+            ->leftJoin( 'filter', '`org_filter`.`filter_id` = `filter`.`id`');
+        return $query->createCommand()->queryAll();
     }
 }

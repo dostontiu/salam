@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
@@ -58,7 +56,7 @@ class Filter extends \yii\db\ActiveRecord
      */
     public function getOrganizationFilters()
     {
-        return $this->hasMany(OrgFilter::className(), ['filter_id' => 'id']);
+        return $this->hasMany(OrgFilter::className(), ['filter_id' => 'id'])->with('organization');
     }
 
     /* Getter for all name */

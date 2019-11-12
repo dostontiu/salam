@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Category;
 use common\models\OrgFilter;
 use common\models\Region;
 use yii\helpers\Html;
@@ -108,7 +109,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'category_id',
-                        'value' => 'category.name_ru'
+                        'value' => 'category.name_ru',
+                        'filter' => Category::find()->select(['name_ru', 'id'])->indexBy('id')->column(),
+                        'filterInputOptions' => [
+                            'class' => 'form-control',
+                            'prompt' => 'Все'
+                        ],
                     ],
 //                    [
 //                        'attribute' => 'Фото',

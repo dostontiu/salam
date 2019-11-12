@@ -26,9 +26,9 @@ class m190911_073735_organizations extends Migration
             'type_tj' => $this->string()->null(),
             'type_en' => $this->string()->null(),
             'type_ru' => $this->string()->null(),
-            'description_tj' => $this->string()->null(),
-            'description_en' => $this->string()->null(),
-            'description_ru' => $this->string()->null(),
+            'description_tj' => $this->text()->null(),
+            'description_en' => $this->text()->null(),
+            'description_ru' => $this->text()->null(),
         ]);
 
         // creates index for column `user_id`

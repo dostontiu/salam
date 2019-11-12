@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%category}}".
@@ -83,5 +84,14 @@ class Category extends \yii\db\ActiveRecord
             return false;
         }
         return true;
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields['icon'] = function($model){
+            return Url::base(true).'/uploads/'.$model->icon;
+        };
+        return $fields;
     }
 }
