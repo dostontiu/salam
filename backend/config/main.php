@@ -64,7 +64,7 @@ return [
 //            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => ['api/organization', 'api/region', 'api/category', 'api/comment', 'api/filter', 'api/user']],
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['api/organization', 'api/region', 'api/category', 'api/comment', 'api/filter', 'api/user', 'api/history']],
                 'logout' => 'site/logout',
                 'login' => 'site/login',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
