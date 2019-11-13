@@ -89,6 +89,7 @@ AdminAsset::register($this);
                     <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
                         <ul class="kt-menu__nav ">
                             <li class="kt-menu__item <?=(Yii::$app->controller->id=='site')?'kt-menu__item--active':''?>" aria-haspopup="true"><a href="<?= Yii::$app->homeUrl?>" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-home"></i><span class="kt-menu__link-text">Главная</span></a></li>
+                            <li class="kt-menu__item <?=(Yii::$app->controller->id=='profile')?'kt-menu__item--active':''?>" aria-haspopup="true"><a href="<?= Yii::$app->homeUrl?>profile/show" class="kt-menu__link "><i class="kt-menu__link-icon fa fa-user"></i><span class="kt-menu__link-text">Мой профиль</span></a></li>
                             <?php if (Yii::$app->user->can('userAccess')){ ?>
                                 <li class="kt-menu__section ">
                                     <h4 class="kt-menu__section-text">Пользователи</h4>

@@ -5,6 +5,7 @@ use \mdm\admin\models\User as UserModel;
 use Yii;
 use yii\base\Exception;
 use yii\base\NotSupportedException;
+use yii\helpers\Url;
 
 /**
  * User model
@@ -49,12 +50,27 @@ class User extends UserModel
 
     public function fields()
     {
-        return [
+        $fields = [
             'id',
             'username',
             'email',
             'type_social',
             'status',
         ];
+
+        $fields['first_name'] = function ($model){ return $model->profile['first_name']; };
+        $fields['last_name'] = function ($model){ return $model->profile['last_name']; };
+        $fields['father_name'] = function ($model){ return $model->profile['father_name']; };
+        $fields['date_birth'] = function ($model){ return $model->profile['date_birth']; };
+        $fields['image'] = function ($model){ return (!$model->profile) ? null : Url::base(true).'/uploads/profile/'.$model->profile['image']; };
+        $fields['telephone'] = function ($model){ return $model->profile['telephone']; };
+        $fields['address'] = function ($model){ return $model->profile['address']; };
+
+        return $fields;
+    }
+
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::className(), ['user_id' => 'id']);
     }
 }
