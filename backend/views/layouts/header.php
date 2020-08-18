@@ -33,7 +33,7 @@ AdminAsset::register($this);
     <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
         <div class="kt-header-mobile__logo">
             <a href="<?= Yii::$app->homeUrl?>">
-                <img alt="Logo" src="<?= Yii::$app->homeUrl?>admin/media/logos/logo-light.png" />
+                <img alt="Logo" src="<?= Yii::$app->homeUrl?>admin/media/logos/logo-light1.png" />
             </a>
         </div>
         <div class="kt-header-mobile__toolbar">
@@ -55,7 +55,7 @@ AdminAsset::register($this);
                 <div class="kt-aside__brand kt-grid__item " id="kt_aside_brand">
                     <div class="kt-aside__brand-logo">
                         <a href="<?= Yii::$app->homeUrl?>">
-                            <img alt="Logo" src="<?= Yii::$app->homeUrl?>admin/media/logos/logo-light.png" />
+                            <img alt="Logo" src="<?= Yii::$app->homeUrl?>admin/media/logos/logo-light1.png" />
                         </a>
                     </div>
                     <div class="kt-aside__brand-tools">
